@@ -24,42 +24,57 @@ export default function Vcode() {
         setValue(valueClone)
     }
     
+    /* 输入数字时 */
+    let inputNum = (target,index)=>{
+        target.preventDefault()
+        set(target.code.toString().replace('Digit',""),index)
+        inputRef.current[index].focus()
+    }
+
+    /* 按下删除键时 */
+    let inputDel = (target,index)=>{
+        
+        target.preventDefault()
+
+        if(index === 0){
+            splice(0)
+            inputRef.current[0].focus()
+        }else {
+            splice(index)
+            inputRef.current[index - 1].focus()
+        }
+        
+    }
 
     /* onkeydown事件根据index和按的值来判断 */
     let change = (e,index)=>{
         isKeyDown = true
         if(index === 0 ){
-            if(inputRef.current[index].value.length === 0 ){
+            if (inputRef.current[index].value.length === 1){
                 if(e.keyCode >= 48 && e.keyCode <=57){
-                    e.preventDefault()
-                    set(e.code.toString().replace('Digit',""),0)
-                    inputRef.current[index + 1].focus()
+                    inputNum(e,1)
                 }
             }
         }else if (index === (inputRef.current.length - 1)){
             if(inputRef.current[index].value.length === 1){
                 if(e.keyCode === 8){
-                    e.preventDefault()
-                    splice(inputRef.current.length - 1)
-                    inputRef.current[index - 1].focus()
+                    inputDel(e,inputRef.current.length - 1)
                 }
             }else if (inputRef.current[index].value.length === 0){
                 if(e.keyCode === 8){
-                    e.preventDefault()
-                    splice(inputRef.current.length - 2)
-                    inputRef.current[index - 1].focus()
+                    inputDel(e,inputRef.current.length - 2)
                 }
             }
         }else if (index > 0 &&  index < inputRef.current.length){
             if(inputRef.current[index].value.length === 0){
                 if(e.keyCode >= 48 && e.keyCode <=57){
-                    e.preventDefault()
-                    set(e.code.toString().replace('Digit',""),index)
-                    inputRef.current[index + 1].focus()
+                    inputNum(e,index)
                 }else if(e.keyCode === 8) {
-                    e.preventDefault()
-                    splice(index - 1)
-                    inputRef.current[index - 1].focus()
+                    inputDel(e,index -1)
+                }
+            }if(inputRef.current[index].value.length === 1){
+                if(e.keyCode >= 48 && e.keyCode <=57){
+                    inputNum(e,index+1)
                 }
             }
         }
