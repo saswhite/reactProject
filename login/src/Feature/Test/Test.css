@@ -1,0 +1,26 @@
+.content-container{
+    display : flex;
+    justify-content : center;
+}
+
+.content-container-section{
+    width : 40px;
+    height : 20px;
+    margin : 20px;
+    text-align : center;
+    border-bottom : 1px solid #000;
+}
+.container{
+    position : relative;
+    width : 100%;
+}
+
+.mask{
+    position : absolute;
+    top : 0;
+    left : 50%;
+    width : 200px;
+    height : 22px;
+    background-color : #fff;
+    transform : translateX(-50%);
+}

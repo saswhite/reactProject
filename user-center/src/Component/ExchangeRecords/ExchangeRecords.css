@@ -1,0 +1,23 @@
+.point {
+    padding-top : 50px;
+    overflow : auto;
+}
+    
+.point-section-container {
+    display : flex;
+    justify-content : space-between;
+    width : 100%;
+    height : 60px;
+    padding-top : 30px;
+    line-height : 20px;
+    border-bottom : 1px solid #ccc;}
+.point-section-name {
+    display : inline-block;
+    width : 600px;
+    font-size : 16px;
+    color : #555555;
+    word-wrap : break-word;
+}
+.point-section-created {
+    color : #9d9d9d;
+}
