@@ -8,9 +8,9 @@
 
 .input-vcode{
     width : 40px;
-    color : transparent;
+    /* color : transparent; */
     text-align : center;
-    text-shadow : 0 0 0 #000;
+    /* text-shadow : 0 0 0 #000; */
     border : none;
     border-bottom : 1px solid #000;
     outline : none;

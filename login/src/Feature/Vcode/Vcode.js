@@ -5,8 +5,8 @@ import _ from 'lodash';
 import './Vcode.css'
 
 export default function Vcode() {
-    let pattern = /^\d+$/
-    let isKey = false;
+    let pattern = /^\d+$/ //判断是否是数字
+    let isKeyDown = false;//判断是否键盘在输入
     let inputRef = useRef([]);
     let [value, setValue] = useState([])
 
@@ -23,44 +23,51 @@ export default function Vcode() {
         valueClone.splice(index,1)
         setValue(valueClone)
     }
-
+    
 
     /* onkeydown事件根据index和按的值来判断 */
     let change = (e,index)=>{
-        isKey = true
+        isKeyDown = true
         if(index === 0 ){
             if(inputRef.current[index].value.length === 0 ){
                 if(e.keyCode >= 48 && e.keyCode <=57){
-                    set(e.code.toString().replace('Digit',""),0)
                     e.preventDefault()
+                    set(e.code.toString().replace('Digit',""),0)
                     inputRef.current[index + 1].focus()
                 }
             }
         }else if (index === (inputRef.current.length - 1)){
             if(inputRef.current[index].value.length === 1){
                 if(e.keyCode === 8){
-                    splice(inputRef.current.length - 1)
                     e.preventDefault()
+                    splice(inputRef.current.length - 1)
+                    inputRef.current[index - 1].focus()
+                }
+            }else if (inputRef.current[index].value.length === 0){
+                if(e.keyCode === 8){
+                    e.preventDefault()
+                    splice(inputRef.current.length - 2)
                     inputRef.current[index - 1].focus()
                 }
             }
         }else if (index > 0 &&  index < inputRef.current.length){
             if(inputRef.current[index].value.length === 0){
                 if(e.keyCode >= 48 && e.keyCode <=57){
-                    set(e.code.toString().replace('Digit',""),index)
                     e.preventDefault()
+                    set(e.code.toString().replace('Digit',""),index)
                     inputRef.current[index + 1].focus()
                 }else if(e.keyCode === 8) {
-                    splice(index - 1)
                     e.preventDefault()
+                    splice(index - 1)
                     inputRef.current[index - 1].focus()
                 }
             }
         }
     }
 
+    /* 只有键盘输入的时候才失焦 */
     let blur = (index)=>{
-        if(!isKey){
+        if(!isKeyDown){
             inputRef.current[index].focus()
         }
     }
@@ -73,7 +80,6 @@ export default function Vcode() {
         }
         set(v,index)
     }
-
 
     /* 监测value的变化 */
     useEffect(() => {
